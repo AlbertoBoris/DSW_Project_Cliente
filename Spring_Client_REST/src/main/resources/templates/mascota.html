@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Usuarios</title>
+<title>Mascotas</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -91,38 +91,32 @@
 <body>
 	<div class="container">
 		
-			<h3 class="text-center mt-4">Lista de Usuarios</h3>
+			<h3 class="text-center mt-4">Lista de Mascotas</h3>
 			
 			<button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#modalMedicamento" id="btn-nuevo">
-			 <i class="far fa-file"></i> Nuevo Usuario
+			 <i class="far fa-file"></i> Nueva Mascota
 			</button>
 			<div class=" mt-2">
 	
-				<table class="table table-striped table-bordered mt-12" id="tableUsuario">
+				<table class="table table-striped table-bordered mt-12" id="tableMascota">
 							  <thead>
 							   <tr>
 					                <th>Nombre</th>
-					                <th>Apellido</th>
-					                <th>DNI</th>
-					                <th>Direccion</th>
-					                <th>Apodo</th>
-					                <th>Correo</th>
-					                <th>Telefono</th>
-					                <th>Distrito</th>
+					                <th>Animal</th>
+					                <th>Raza</th>
+					                <th>Nacimiento</th>
+					                <th>Dueño</th>
 					                <th></th>
 					                <th></th>
 					            </tr>
 							  </thead>
 							  <tbody>
-								<tr th:each="bean:${usuarios}">
-							      <td th:text="${bean.nombres}"></td>
-							      <td th:text="${bean.apellidos}"></td>
-							      <td th:text="${bean.dni}"></td>
-							      <td th:text="${bean.direccion}"></td>
-							      <td th:text="${bean.apodo}"></td>
-							      <td th:text="${bean.correo}"></td>
-							      <td th:text="${bean.telefono}"></td>
-							      <td th:text="${bean.distrito.nombre}"></td>
+								<tr th:each="bean:${mascotas}">
+							      <td th:text="${bean.nombre}"></td>
+							      <td th:text="${bean.animal}"></td>
+							      <td th:text="${bean.raza}"></td>
+							      <td th:text="${bean.fec_Nac}"></td>
+							      <td th:text="${bean.usuario.nombres}"></td>
 							      <td><a th:href="@{buscar/(codigo=${bean.codigo})}" class="btn btn-info btn-editar" data-toggle="modal" data-target="#modalMedicamento"><i class="far fa-edit"></i></a></td>
 							      <td><a th:href="@{eliminar/(codigo=${bean.codigo})}" class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
 							      
@@ -137,88 +131,53 @@
 						<div class="modal-dialog modal-dialog-centered modal-login modal-lg" >					
 							<div class="modal-content">
 								<div class="modal-header bg-blue-darker">
-									<h4 class="modal-title text-white">Usuario</h4>
+									<h4 class="modal-title text-white">Mascota</h4>
 								</div>
 								<div class="modal-body">
-									<form method="POST" id="idRegistra" th:action="@{/usuario/guardar}">	
+									<form method="POST" id="idRegistra" th:action="@{/mascota/guardar}">
 										<input type="hidden" id="idCodigo" name="codigo" value="0">
 										<div class="container">
 											<div class="row">
 											
-												<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Nombre</b></label><br>		
+												<div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>Nombres</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idNombre" name="nombres" placeholder="Ingresar nombres">																										
-												</div>
-												
-												<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Apellido P.</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idApellido" name="apellidos" placeholder="Ingresar apellidos">																										
-												</div>
-												
-												<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Direccion</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idDireccion" name="direccion" placeholder="Ingresar direccion">																										
+														<input type="text" class="form-control" id="idNombre" name="nombre" placeholder="Ingresar nombre">																										
 												</div>
 												
 												<div class="form-group has-feedback col-md-4">
-														<label for="exampleInputEmail1"><b>DNI</b></label><br>		
+														<label for="exampleInputEmail1"><b>Animal</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idDni" name="dni" placeholder="Ingresar DNI">																										
+														<input type="text" class="form-control" id="idAnimal" name="animal" placeholder="Ingresar animal">																										
 												</div>
 												
-												<div class="form-group has-feedback col-md-4">
-														<label for="exampleInputEmail1"><b>Apodo</b></label><br>		
+												<div class="form-group has-feedback col-md-6">
+														<label for="exampleInputEmail1"><b>Raza</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idApodo" name="apodo" placeholder="Ingresar apodo">																										
+														<input type="text" class="form-control" id="idRaza" name="raza" placeholder="Ingresar raza">																										
 												</div>
-												
-												<div class="form-group has-feedback col-md-4">
-														<label for="exampleInputEmail1"><b>Contraseña</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idContrasena" name="contrasena" placeholder="Ingresar contraseña">																										
-												</div>
-												
-												<div class="form-group has-feedback col-md-12">
-														<label for="exampleInputEmail1"><b>Correo</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idCorreo" name="correo" placeholder="Ingresar correo">																										
+																																					
 												</div>												
 												
-											    <div class="form-group has-feedback col-md-4">	
+											    <div class="form-group has-feedback col-md-5">	
 													<label for="exampleInputEmail1" class="text-center"><b>Fecha Nacimiento</b></label><br>
 												    <i class="fas fa-calendar-week form-control-feedback2"></i>
 												    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1" 
-												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >							
-											    </div>	
-											    
-											    <div class="form-group has-feedback col-md-4">
-														<label for="exampleInputEmail1"><b>Telefono</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idTelefono" name="telefono" placeholder="Ingresar telefono">																										
-												</div>	
-												
-												<div class="form-group has-feedback col-md-4">
-														<label for="exampleInputEmail1"><b>Sexo</b></label><br>		
-														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input type="text" class="form-control" id="idSexo" name="sexo" placeholder="Ingresar sexo">																										
-												</div>	
+												    													  name="fec_Nac" placeholder="YYYY-MM-DD" autocomplete="off" >							
+											    </div>												   
 											    											
-											    <div class="form-group has-feedback col-md-6">	
-														<label for="exampleInputEmail1"><b>Distrito</b></label><br>
+											    <div class="form-group has-feedback col-md-5">	
+														<label for="exampleInputEmail1"><b>Dueño</b></label><br>
 												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
-													    <select class="form-control" name="distrito" id="idDistrito">
-													      <option value="0">[Seleccione Distrito]</option>
-													      <option th:each="bean:${distritos}"
+													    <select class="form-control" name="usuario" id="idUsuario">
+													      <option value="0">[Seleccione Usuario]</option>
+													      <option th:each="bean:${usuarios}"
 													      			th:value="${bean.codigo}"
-													      			th:utext="${bean.nombre}"
+													      			th:utext="${bean.nombres}"
 													      			/>
 													    </select>
 												 </div>
-											</div>
-										</div>								
+											</div>																	
 										<div class="col-md-12 text-center mt-4"> 										
 											<button type="submit" id="Guardar" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
 											<button type="button" id="btn-cerrar" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
@@ -230,7 +189,6 @@
 		</div>
 		<!-- FIN Modal MEDICAMENTO-->	
 	
-		
 		
 	</div>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -263,7 +221,7 @@
 		
 		var codigoTipo=0;
 	
-		$('#tableUsuario').DataTable();
+		$('#tableMascota').DataTable();
 		$(function() {
 			$('#usr1').datepicker({
 				'format': 'yyyy-mm-dd',
@@ -283,17 +241,11 @@
 		$.get(url,function(response){
 			//console.log(response);
 			$("#idCodigo").val(response.codigo);
-			$("#idNombre").val(response.nombres);
-			$("#idApellido").val(response.apellidos);
-			$("#idDireccion").val(response.direccion);
-			$("#idDni").val(response.dni);
-			$("#idApodo").val(response.apodo);
-			$("#idContrasena").val(response.contrasena);
-			$("#idCorreo").val(response.correo);
-			$("#usr1").val(response.fecha_Nac);
-			$("#idTelefono").val(response.telefono);
-			$("#idSexo").val(response.sexo);
-			$("#idDistrito").val(response.distrito.codigo);
+			$("#idNombre").val(response.nombre);
+			$("#idAnimal").val(response.animal);
+			$("#idRaza").val(response.raza);
+			$("#usr1").val(response.fec_Nac);
+			$("#idUsuario").val(response.usuario.nombres);
 		})
 	})
 	
@@ -305,7 +257,7 @@
 		var url=$(this).attr("href");
 		var cod=$(this).parents("tr").find("td")[0].innerHTML;
 		swal({
-			  title: "Seguro de eliminar Usuario de Nombre :"+cod,
+			  title: "Seguro de eliminar Mascota de nombre :"+cod,
 			  text: "",
 			  icon: "warning",
 			  buttons: true,
@@ -354,56 +306,24 @@
 	                        }      
 	                    }    
 	                },   
-	                Apellidos: {
-	     	    		selector:'#idApellido',   
+	                Animal: {
+	     	    		selector:'#idAnimal',   
 	                    validators: {    
 	                        notEmpty: {    
 	                            message: 'Ingrese Apellido'    
 	                        }      
 	                    }    
 	                },  
-	                Direccion: {
-	     	    		selector:'#idDireccion',   
+	                Raza: {
+	     	    		selector:'#idRaza',   
 	                    validators: {    
 	                        notEmpty: {    
 	                            message: 'Ingrese Direccion'    
 	                        }      
 	                    }    
-	                },   
-	                DNI: {
-	     	    		selector:'#idDni',       
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese DNI'    
-	                        }      
-	                    }    
-	                },    
-	                Apodo: {
-	     	    		selector:'#idApodo',   
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese Apodo'    
-	                        }      
-	                    }    
-	                },   
-	                Contrasena: {
-	     	    		selector:'#idContrasena',   
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese Contraseña'    
-	                        }      
-	                    }    
-	                },    
-	                Correo: {
-	     	    		selector:'#idCorreo',   
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese Correo'    
-	                        }      
-	                    }    
-	                },   
+	                },  
 	                FechaNac: {
-	     	    		selector:'#id_Fecha',   
+	     	    		selector:'#usr1',   
 	                    validators: {    
 	                        notEmpty: {    
 	                            message: 'Seleccione fecha '    
@@ -414,27 +334,11 @@
 	                        },
 	                    }    
 	                },
-	                Telefono: {
-	     	    		selector:'#idTelefono',   
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese telefono'    
-	                        }      
-	                    }    
-	                }, 
-	                Sexo: {
-	     	    		selector:'#idSexo',   
-	                    validators: {    
-	                        notEmpty: {    
-	                            message: 'Ingrese sexo'    
-	                        }      
-	                    }    
-	                }, 
 	                Tipo: {
-	     	    		selector:'#idTipo',   
+	     	    		selector:'#idUsuario',   
 	                    validators: {    
 	                        notEmpty: {    
-	                            message: 'Seleccione tipo medicamento'    
+	                            message: 'Seleccione Usuario'    
 	                        },					
 	                    }    
 	                } 
