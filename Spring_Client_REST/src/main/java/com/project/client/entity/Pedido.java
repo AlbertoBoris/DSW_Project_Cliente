@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Pedido implements Serializable {
 
 	private int codigo;
-	private java.util.Date fec_Ped;
+	private String fec_Ped;
 	private Usuario usuario;
 	private Servicio servicio;
 	private Estado estado;
@@ -21,11 +21,11 @@ public class Pedido implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public java.util.Date getFec_Ped() {
+	public String getFec_Ped() {
 		return fec_Ped;
 	}
 
-	public void setFec_Ped(java.util.Date fec_Ped) {
+	public void setFec_Ped(String fec_Ped) {
 		this.fec_Ped = fec_Ped;
 	}
 
