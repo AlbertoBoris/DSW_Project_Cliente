@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet"
+	th:href="@{/resources/datepicker/bootstrap-datepicker.css}">
+<link rel="stylesheet"
+	th:href="@{/resources/alertifyjs/css/alertify.css}">
+<link rel="stylesheet"
+	th:href="@{/resources/alertifyjs/css/alertify.min.css}">
+<title>Mascotas</title>
+<style>
+.modal-header, h4, .close {
+	background-color: #286090;
+	color: white !important;
+	text-align: center;
+	font-size: 20px;
+}
+
+.help-block {
+	color: red;
+	/*display: none;*/
+}
+
+.form-group.has-error .form-control-label {
+	color: red;
+}
+
+.form-group.has-error .form-control {
+	border: 1px solid red;
+	box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
+
+.alertify .ajs-dialog {
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+}
+
+.ajs-header {
+	background-color: #286090 !important;
+	color: white !important;
+	/*text-align: center;*/
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.ajs-ok {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+.ajs-cancel {
+	color: #fff;
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.btn-primary {
+	background-color: #286090 !important;
+}
+
+.dataTables_length, .dataTables_info {
+	display: none;
+}
+
+.modal-lg, .modal-xl {
+	max-width: 900px;
+	max-height: 800px;
+}
+
+.form-control-feedback2 {
+	margin: 1px;
+	position: absolute;
+	padding: 10px;
+	pointer-events: none;
+	background-color: #e9ecef;
+	border-style: none;
+}
+
+.form-control-feedback3 {
+	margin: 1px;
+	position: absolute;
+	margin-left: 225px;
+	padding: 10px;
+	pointer-events: none;
+	background-color: #e9ecef;
+	border-style: none;
+}
+
+.form-control {
+	padding-left: 40px !important;
+}
+
+.in {
+	cursor: pointer;
+}
+
+.navtext {
+	color: #f8f9fc !important;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.navtext:hover {
+	color: rgb(0, 155, 95) !important;
+	transition: 0.3s;
+}
+
+.perfil {
+	margin: auto;
+	box-shadow: 5px 5px rgb(219, 219, 219);
+}
+</style>
+</head>
+<body>
+	<div class="" style="width: 100%; margin: 0px auto;">
+		<!--NavBar-->
+		<div style="background-color: rgb(48, 78, 105) !important;">
+			<a href="https://cooltext.com"><img
+				src="https://images.cooltext.com/5537118.png"
+				style="width: 16%; margin-left: 75px;" alt="MediPets" /></a>
+			<!--NavBar-->
+			<nav style="float: right; width: 75%" class="navbar navbar-expand-lg">
+				<a class="navbar-brand" href="#"> <img src="img/libroLogo.png"
+					alt="" width="100px">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse offset-lg-5"
+					id="navbarNavDropdown">
+					<ul class="navbar-nav">
+						<li class="nav-item ml-4"><a class="nav-link navtext"
+							href="/inicio/">Inicio</a></li>
+
+						<li class="nav-item ml-4"><a class="nav-link navtext"
+							href="/pedidoServicio/">Servicios</a></li>
+
+						<li class="nav-item ml-4"><a class="nav-link navtext"
+							href="/pedidoServicio/">Nosotros</a></li>
+
+						<li class="nav-item ml-4"><a class="nav-link navtext"
+							href="/reclamoServicio/">Quejas</a></li>
+
+						<li class="nav-item ml-4"><a class="nav-link navtext"
+							href="#">Cerrar Sesion</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<!--/NavBar-->
+		<!--Section-->
+		<div class="container">
+
+
+			<h3 class="text-center mt-4">Presentar un Reclamo</h3>
+			<h5 style="font-style: italic; text-align: center; color: gray;">Totalmente Anonimo</h5>
+			<br>
+
+			<div class=" mt-2">
+				<form method="POST" id="idRegistra"
+					th:action="@{/reclamoServicio/guardar}">
+					<input type="hidden" id="idCodigo" name="codigo" value="0">
+					<div class="container">
+						<div class="row">
+
+							<div class="form-group has-feedback col-md-6">
+								<label for="exampleInputEmail1"><b>Servicio</b></label><br>
+								<i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+								<select class="form-control" name="servicioRecl"
+									id="idservicioRecl">
+									<option value="0">[Seleccione Servicio]</option>
+									<option th:each="bean:${servicios}" th:value="${bean.codigo}"
+										th:utext="${bean.nombres}" />
+								</select>
+							</div>
+
+							<div class="form-group has-feedback col-md-6">
+								<label for="exampleInputEmail1" class="text-center"><b>Fecha
+										del incidente</b></label><br> <i
+									class="fas fa-calendar-week form-control-feedback2"></i> <input
+									type="text" style="background-color: #aed6f1"
+									class="form-control" id="usr1" name="fec_Inc"
+									placeholder="YYYY-MM-DD" autocomplete="off">
+							</div>
+
+							<div class="form-group has-feedback col-md-6">
+								<label for="exampleInputEmail1"><b>Asunto</b></label><br> <i
+									class="fas fa-file-signature form-control-feedback2"></i> <input
+									type="text" class="form-control" id="idAsunto" name="asunto"
+									placeholder="Ingresar Asunto">
+							</div>
+
+							<div class="form-group has-feedback col-md-6">
+								<label for="exampleInputEmail1"><b>Contacto</b></label><br>
+								<i class="fas fa-file-signature form-control-feedback2"></i> <input
+									type="text" class="form-control" id="idContacto"
+									name="contacto" placeholder="Ingresar Correo/Telefono">
+							</div>
+
+							<div class="form-group has-feedback col-md-12">
+								<label for="exampleInputEmail1"><b>Descripcion</b></label><br>
+
+								<textarea rows="3" class="form-control" id="idDescripcion"
+									name="descripcion" placeholder="Ingresa la Descripcion"></textarea>
+							</div>
+
+						</div>
+
+
+
+
+					</div>
+					<div class="col-md-12 text-center mt-4">
+						<button type="submit" id="Guardar" class="btn btn-primary">
+							<i class="fas fa-save"></i> Registrar
+						</button>
+						<a type="button" href="/inicio/" class="btn btn-danger"><i
+							class="fas fa-undo-alt"></i> Cancelar</a>
+					</div>
+				</form>
+
+			</div>
+
+			<!-- begin #modal-dialog : MODAL MEDICAMENTO-->
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<!--Section-->
+		<!--Footer-->
+		<footer style="height: 50px; background-color: rgb(48, 78, 105);">
+			<div class="row">
+				<div class="col text-center text-white">
+					<h5 class="mt-3">@Aplicacion Web DSWII - Copyright © MediPets
+						2021</h5>
+				</div>
+			</div>
+		</footer>
+		<!--/Footer-->
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+	<script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script>
+	<script
+		src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://kit.fontawesome.com/08aaa156fb.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	<script th:src="@{/resources/sweetalert/sweetalert.min.js}"></script>
+
+	<script th:inline="javascript" th:if="${MENSAJE!=null}">
+		//obtener atributo MENSAJE
+		var mensaje=/*[[${MENSAJE}]]*/ null;
+		
+		toastr.success(mensaje, toastr.options = {
+			"timeOut": "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	
+	</script>
+
+
+
+	<script>
+		
+		var codigoTipo=0;
+	
+		$('#tableReclamo').DataTable();
+		$(function() {
+			$('#usr1').datepicker({
+				'format': 'yyyy-mm-dd',
+				'autoclose': true
+			});
+	
+		});
+		$('#usr1').on('changeDate show', function(e) {
+		    $('#idRegistra').bootstrapValidator('revalidateField', $('#usr1'));
+		});
+
+		
+	//asignar evento click al botón con clase "btn-eliminar"
+	$(document).on("click",".btn-eliminar",function(e){
+		//indicar por defecto la acción principal del botón(etiqueta a) y anular el atributo href
+		event.preventDefault();
+		//obtener valor del atributo href del botón(etiqueta a) seleccionado.
+		var url=$(this).attr("href");
+		var cod=$(this).parents("tr").find("td")[0].innerHTML;
+		swal({
+			  title: "Seguro de eliminar Reclamo de nombre :"+cod,
+			  text: "",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			  buttons: ["No", "Si"],
+			})
+			.then((willSave) => {
+			  if (willSave) {
+				window.location=url;
+			  } 
+			})		  
+				  	
+	})			
+
+	//asignar evento click al botón con ID "btn-cerrar"
+	$(document).on("click","#btn-cerrar",function(){
+			//reiniciar validación al formulario con ID "idRegistra" 
+			$('#idRegistra').data("bootstrapValidator").resetForm(true);
+			//resetear "limpiar cajas" que existen el formulario con ID "idRegistra"
+			$('#idRegistra').trigger("reset");	
+			//mostrar en la caja con ID "idCodigo" el valor de "0"
+			$("#idCodigo").val(0);
+	})
+
+
+	
+
+	</script>
+
+	<script type="text/javascript">    
+	    $(document).ready(function(){     
+	
+	        $('#idRegistra').bootstrapValidator({     
+	        	feedbackIcons: {
+	                valid: 'glyphicon glyphicon-ok',
+	                invalid: 'glyphicon glyphicon-remove',
+	                validating: 'glyphicon glyphicon-refresh'
+	            },
+	        	 fields:{
+	        		 
+	        		 Nombres: {
+	     	    		selector:'#idservicioRecl',   
+	                    validators: {    
+	                        notEmpty: {    
+	                            message: 'Seleccione Servicio'    
+	                        }      
+	                    }    
+	                },   
+	                Animal: {
+	     	    		selector:'#idAsunto',   
+	                    validators: {    
+	                        notEmpty: {    
+	                            message: 'Ingrese el Asunto'    
+	                        }      
+	                    }    
+	                },  
+	                Raza: {
+	     	    		selector:'#idDescripcion',   
+	                    validators: {    
+	                        notEmpty: {    
+	                            message: 'Ingrese Descripcion'    
+	                        }      
+	                    }    
+	                },  
+	                Tipo: {
+	     	    		selector:'#idContacto',   
+	                    validators: {    
+	                        notEmpty: {    
+	                            message: 'Ingrese un Contacto'    
+	                        },					
+	                    }    
+	                }, 
+	                Fecha: {
+	     	    		selector:'#usr1',   
+	                    validators: {    
+	                        notEmpty: {    
+	                            message: 'Ingrese un Contacto'    
+	                        },					
+	                    }    
+	                } 
+	        	 }
+	        });   				
+	    });    
+	</script>
+</body>
+</html>
