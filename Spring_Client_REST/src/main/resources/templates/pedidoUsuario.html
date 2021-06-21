@@ -139,7 +139,7 @@
                 </li> 
                 
                 <li class="nav-item ml-2">
-                  <a class="nav-link navtext" href="#">Cerrar Sesion</a>
+                  <a class="nav-link navtext" href="/login/logout">Cerrar Sesion</a>
                 </li>
               </ul>
             </div>
@@ -154,9 +154,15 @@
 			<h5 style="font-style: italic; text-align: center; color: gray;">Ante cualquier duda, consulte un Admin.</h5>
 	
 		<form>
-		   <div class="form-row mt-2">
+		   <div class="form-row mt-4">
 			    <div class="col-auto">
-			      <button type="button" class="btn btn-primary mb-2" id="btn-consultar">Ver mis Pedidos</button>
+			       <label for="exampleInputPassword1">ID del Usuario: </label>
+			    </div>
+			   <div class="col-1">
+			      	 <input readonly="readonly" th:value="${session.usuario.codigo}" type="text" class="form-control" id="idUsuario">
+			    </div>
+			    <div class="col-auto">
+			      <button type="button" class="btn btn-primary mb-2" id="btn-consultar">Consultar</button>
 			    </div>
 		  </div>
 		</form>
@@ -208,7 +214,7 @@
 	<script>
 	$(document).on("click","#btn-consultar",function(){
 		$("#tablePedido tbody").empty();
-		$.get("listado?usuario="+"2",function(response){
+		$.get("listado?usuario="+$("#idUsuario").val(),function(response){
 			$.each(response,function(index,item){
 				$("#tablePedido").append("<tr><td>"+item.codigo+"</td><td>"+item.fec_Ped+"</td><td>"+
 															item.usuario.nombres+"</td><td>"+item.servicio.nombres+"</td><td>"+

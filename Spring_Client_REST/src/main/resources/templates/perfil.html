@@ -114,17 +114,17 @@
                   <div class="col-md-6">
                     <div class="card-body">
                       <h5 class="card-title">Perfil del Usuario</h5>
-                      <p class="card-text">Codigo: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Nombres: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Apellidos: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Direccion: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">DNI: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Nombre Usuario: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Correo: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Fecha Nacimiento: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Telefono: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Sexo: <small class="text-muted">Datos</small></p>
-                      <p class="card-text">Distrito: <small class="text-muted">Datos</small></p>
+                      <p class="card-text">Codigo: <small class="text-muted" th:text="${session.usuario.codigo}">Datos</small></p>
+                      <p class="card-text">Nombres: <small class="text-muted" th:text="${session.usuario.nombres}">Datos</small></p>
+                      <p class="card-text">Apellidos: <small class="text-muted" th:text="${session.usuario.apellidos}">Datos</small></p>
+                      <p class="card-text">Direccion: <small class="text-muted" th:text="${session.usuario.direccion}">Datos</small></p>
+                      <p class="card-text">DNI: <small class="text-muted" th:text="${session.usuario.dni}">Datos</small></p>
+                      <p class="card-text">Nombre Usuario: <small class="text-muted" th:text="${session.usuario.apodo}">Datos</small></p>
+                      <p class="card-text">Correo: <small class="text-muted" th:text="${session.usuario.correo}">Datos</small></p>
+                      <p class="card-text">Fecha Nacimiento: <small class="text-muted" th:text="${session.usuario.fecha_Nac}">Datos</small></p>
+                      <p class="card-text">Telefono: <small class="text-muted" th:text="${session.usuario.telefono}">Datos</small></p>
+                      <p class="card-text">Sexo: <small class="text-muted" th:text="${session.usuario.sexo}">Datos</small></p>
+                      <p class="card-text">Distrito: <small class="text-muted" th:text="${session.usuario.distrito.nombre}">Datos</small></p>
                     </div>
                   </div>
                   <div class="col-12 text-center mt-3 mb-3" style="margin: auto;">

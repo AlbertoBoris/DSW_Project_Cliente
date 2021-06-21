@@ -80,7 +80,7 @@
 	  padding-left: 40px!important;
 	}
         .prin {
-            background: url("img/backgroundVeterinaria.jpeg");
+            background: url("/resources/img/backgroundVeterinaria.png");
             width: 100%;
             min-height: 700px;
             max-height: 1000px;
@@ -101,85 +101,143 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row no-gutters">
                   <div class="col-md-4">
-                    <img src="img/fondo_login_veterinaria.jpeg" alt="..." width="100%" height="100%">
+                    <img src="/resources/img/fondo_login_veterinaria.jpeg" alt="..." width="100%" height="100%">
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">Iniciar Sesion</h5>
-                      <form>
+                      <form th:action="@{/login/log}">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Correo Electronico</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <input type="text" class="form-control" id="exampleInputEmail1" name="correo" aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
                           <label for="exampleInputPassword1">Password</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1">
+                          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                         </div>
                         <div class="mb-3">
-                            <a href="#" data-toggle="modal" data-target="#modalUsuario">Registrate</a>
+                            <a href="#" data-toggle="modal" data-target="#modalRegistro">Registrate</a>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+                        <button  type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
         </div>
-        <!--MODAL-->
-			<div class="modal fade" id="modalUsuario" data-backdrop="static" 
-      data-keyboard="false" tabindex="-1" 
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-login modal-lg" >					
-      <div class="modal-content">
-          <div class="modal-header bg-blue-darker">
-              <h4 class="modal-title text-white">Nuevo Usuario</h4>
-          </div>
-          <div class="modal-body">
-              <form method="POST" id="idRegistra" th:action="@{/mercaderia/guardar}">	
-                  <input type="hidden" id="idCodigo" name="codigo" value="0">
-                  <div class="container">
-                      <div class="row">
-                          <div class="form-group has-feedback col-md-12">
-                                  <label for="exampleInputEmail1"><b>Nombre</b></label><br>		
-                                  <i class="fas fa-file-signature form-control-feedback2"></i>	
-                                  <input type="text" class="form-control" id="idNombre" name="nombre" placeholder="Ingresar nombre">																										
-                          </div>
-                          <div class="form-group has-feedback col-md-4">
-                              <label for="exampleInputEmail1"><b>Stock</b></label><br>	
-                              <i class="fas fa-pen-fancy form-control-feedback2"></i>
-                              <input type="text" class="form-control" id="idStock"  name="stock" placeholder="Ingresar stock">	
-                          </div>
-                          <div class="form-group has-feedback col-md-4">
-                              <label for="exampleInputEmail1"><b>Precio</b></label><br>
-                              <i class="fas fa-money-check-alt form-control-feedback2"></i>
-                              <input type="text" class="form-control" id="idPrecio"  name="precio" placeholder="Ingresar precio">														
-                          </div>											
-                          <div class="form-group has-feedback col-md-6">	
-                                  <label for="exampleInputEmail1"><b>Tipo</b></label><br>
-                                  <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
-                                  <select class="form-control" name="tipo" id="idTipo">
-                                    <option value="0">[Seleccione Tipo]</option>
-                                    <option th:each="bean:${tipos}"
-                                                    th:value="${bean.idTipo}"
-                                                    th:utext="${bean.nombre}"/>
-                                  </select>
-                           </div>
-                      </div>
-                  </div>								
-                  <div class="col-md-12 text-center mt-4"> 										
-                      <button type="submit" id="Guardar" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
-                      <button type="button" id="btn-cerrar" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
-                  </div> 																								
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
-<!--/Modal-->
+        <!-- begin #modal-dialog : MODAL MEDICAMENTO-->
+			<div class="modal fade" id="modalRegistro" data-backdrop="static" 
+							data-keyboard="false" tabindex="-1" 
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-login modal-lg" >					
+							<div class="modal-content">
+								<div class="modal-header bg-blue-darker">
+									<h4 class="modal-title text-white">Usuario</h4>
+								</div>
+								<div class="modal-body">
+									<form method="POST" id="idRegistra" th:action="@{/login/guardar}">	
+										<input type="hidden" id="idCodigo" name="codigo" value="0">
+										<div class="container">
+											<div class="row">
+											
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Nombre</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idNombre" name="nombres" placeholder="Ingresar nombres">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Apellido P.</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idApellido" name="apellidos" placeholder="Ingresar apellidos">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Direccion</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idDireccion" name="direccion" placeholder="Ingresar direccion">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>DNI</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idDni" name="dni" placeholder="Ingresar DNI">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>Apodo</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idApodo" name="apodo" placeholder="Ingresar apodo">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>Contraseña</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idContrasena" name="contrasena" placeholder="Ingresar contraseña">																										
+												</div>
+												
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Correo</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idCorreo" name="correo" placeholder="Ingresar correo">																										
+												</div>												
+												
+											    <div class="form-group has-feedback col-md-4">	
+													<label for="exampleInputEmail1" class="text-center"><b>Fecha Nacimiento</b></label><br>
+												    <i class="fas fa-calendar-week form-control-feedback2"></i>
+												    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1" 
+												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >							
+											    </div>	
+											    
+											    <div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>Telefono</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idTelefono" name="telefono" placeholder="Ingresar telefono">																										
+												</div>	
+												
+												<div class="form-group has-feedback col-md-4">
+														<label for="exampleInputEmail1"><b>Sexo</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control" id="idSexo" name="sexo" placeholder="Ingresar sexo">																										
+												</div>	
+											    											
+											    <div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Distrito</b></label><br>
+												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+													    <select class="form-control" name="distrito" id="idDistrito">
+													      <option value="0">[Seleccione Distrito]</option>
+													      <option th:each="bean:${distritos}"
+													      			th:value="${bean.codigo}"
+													      			th:utext="${bean.nombre}"
+													      			/>
+													    </select>
+												 </div>
+											</div>
+										</div>								
+										<div class="col-md-12 text-center mt-4"> 										
+											<button type="submit" id="Guardar" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
+											<button type="button" id="btn-cerrar" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
+										</div> 																								
+									</form>
+								</div>
+							</div>
+						</div>
+		</div>
+		<!-- FIN Modal MEDICAMENTO-->
       </div>
     
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script th:inline="javascript" th:if="${MENSAJE!=null}">
+		//obtener atributo MENSAJE
+		var mensaje=/*[[${MENSAJE}]]*/ null;
+		
+		toastr.success(mensaje, toastr.options = {
+			"timeOut": "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	
+	</script>
 </body>
 </html>

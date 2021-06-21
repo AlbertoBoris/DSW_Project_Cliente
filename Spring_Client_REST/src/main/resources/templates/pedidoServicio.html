@@ -136,7 +136,7 @@
                 </li> 
                 
                 <li class="nav-item ml-2">
-                  <a class="nav-link navtext" href="#">Cerrar Sesion</a>
+                  <a class="nav-link navtext" href="/login/logout">Cerrar Sesion</a>
                 </li>
               </ul>
             </div>
@@ -148,7 +148,6 @@
 			<h5 style="font-style: italic; text-align: center; color: gray;">de la mejor calidad</h5>
 			
 			<div class="mt-1">
-	
 				<table class="table table-bordered" id="tableServicio">
 							  <thead class="thead-dark ">
 							   <tr>
@@ -181,7 +180,7 @@
 									<h4 class="modal-title text-white">Realizar Pedido</h4>
 								</div>
 								<div class="modal-body">
-									<form method="POST" id="idRegistra" th:action="@{/pedido/guardar}">	
+									<form method="POST" id="idRegistra" th:action="@{/pedidoServicio/guardar}">	
 										<input type="hidden" id="idCodigo" name="codigo" value="0">
 										<div class="container">
 											<div class="row">
@@ -189,32 +188,32 @@
 											 <div class="form-group has-feedback col-md-4">
 														<label for="exampleInputEmail1"><b>Registro</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input  type="text" class="form-control" id="idFec_Ped" name="fec_Ped" placeholder="Ingresar Fecha">																										
+														<input readonly="readonly" type="text" class="form-control" id="idFec_Ped" name="fec_Ped" placeholder="Ingresar Fecha">																										
 												</div>	
 											    
 											    <div class="form-group has-feedback col-md-4">
 														<label for="exampleInputEmail1"><b>Usuario</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input  type="text" class="form-control" id="idUsuario" name="usuario" placeholder="Ingresar Usuario">																										
+														<input readonly="readonly" type="text" th:value="${session.usuario.codigo}" class="form-control" id="idUsuario" name="usuario"placeholder="Ingresar Usuario">																										
 												</div>	
 											    
 											   <div class="form-group has-feedback col-md-4">
 														<label for="exampleInputEmail1"><b>Servicio</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input  type="text" class="form-control" id="idServicio" name="servicio" placeholder="Ingresar Servicio">																										
+														<input readonly="readonly" type="text" class="form-control" id="idServicio" name="servicio" placeholder="Ingresar Servicio">																										
 												</div>			
 												
 												<div class="form-group has-feedback col-md-4">
 														<label for="exampleInputEmail1"><b>Estado</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input  value="4" type="text" class="form-control" id="idEstado" name="estado" placeholder="Ingresar Estado">																										
+														<input readonly="readonly" value="4" type="text" class="form-control" id="idEstado" name="estado" placeholder="Ingresar Estado">																										
 												</div>	
 												
 												
 												<div class="form-group has-feedback col-md-4">
 														<label for="exampleInputEmail1"><b>Horario</b></label><br>		
 														<i class="fas fa-file-signature form-control-feedback2"></i>	
-														<input  type="text" class="form-control" id="idHorario" name="horario" placeholder="Ingresar Horario">																										
+														<input  readonly="readonly" type="text" class="form-control" id="idHorario" name="horario" placeholder="Ingresar Horario">																										
 												</div>	
 												
 												<div class="form-group has-feedback col-md-5">	
@@ -307,7 +306,7 @@
 	//Obtener fecha del sistema
 	var today = new Date();
 	var date = today.getFullYear()+'-'+'0'+(today.getMonth()+1)+'-'+today.getDate();
-		
+			
 	//asignar evento click al botón con clase "btn-editar"
 	$(document).on("click",".btn-editar",function(e){
 		//obtener valor del atributo href del botón(etiqueta a) seleccionado.
@@ -318,6 +317,7 @@
 			$("#idHorario").val(response.horario.codigo);
 			$("#idImporte").val(response.precio);
 			$("#idFec_Ped").val(date);
+			
 		})
 	})
 			
@@ -329,6 +329,7 @@
 			$('#idRegistra').trigger("reset");	
 			//mostrar en la caja con ID "idCodigo" el valor de "0"
 			$("#idCodigo").val(0);
+			
 	})
 
 

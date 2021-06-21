@@ -44,7 +44,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <a class="dropdown-item" href="/usuario/">Mantenimiento</a>
-                      <a class="dropdown-item" href="/usuario/consultaUsuario">Consulta</a>
+                      <a class="dropdown-item" href="#">Consulta</a>
                     </div>
                   </li>
                 <li class="nav-item dropdown">
@@ -53,7 +53,7 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/mascota/">Mantenimiento</a>
-                    <a class="dropdown-item" href="/mascota/consultaMascota">Consulta</a>
+                    <a class="dropdown-item" href="#">Consulta</a>
                   </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -62,7 +62,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <a class="dropdown-item" href="/servicio/">Mantenimiento</a>
-                      <a class="dropdown-item" href="/servicio/consultaServicio">Consulta</a>
+                      <a class="dropdown-item" href="#">Consulta</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -71,7 +71,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <a class="dropdown-item" href="/pedido/">Atender</a>
-                      <a class="dropdown-item" href="/pedido/consultaPedido">Consulta</a>
+                      <a class="dropdown-item" href="#">Consulta</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -80,7 +80,7 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/historial/">Mantenimiento</a>
-                    <a class="dropdown-item" href="/historial/consultaHistorial">Consulta</a>
+                    <a class="dropdown-item" href="#">Consulta</a>
                   </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -89,11 +89,11 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/reclamo/">Listado</a>
-                    <a class="dropdown-item" href="/reclamo/consultaReclamo">Consulta</a>
+                    <a class="dropdown-item" href="#">Consulta</a>
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link navtext" href="#">Cerrar Sesion</a>
+                  <a class="nav-link navtext" href="/login/logout">Cerrar Sesion</a>
                 </li>
               </ul>
             </div>
@@ -112,7 +112,7 @@
                 <h5 class="card-header">Cantidad de Usuarios</h5>
                 <div class="card-body">
                   <h5 class="card-title">Usuarios registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${usuarios}"></p>
                   <a href="/usuario/" class="btn btn-primary">Mantenimiento de Usuarios</a>
                 </div>
               </div>
@@ -123,7 +123,7 @@
                 <h5 class="card-header">Cantidad de Mascotas</h5>
                 <div class="card-body">
                   <h5 class="card-title">Mascotas registradas</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${mascotas}"></p>
                   <a href="/mascota/" class="btn btn-primary">Mantenimiento de Mascotas</a>
                 </div>
               </div>
@@ -134,7 +134,7 @@
                 <h5 class="card-header">Cantidad de Servicios</h5>
                 <div class="card-body">
                   <h5 class="card-title">Servicios registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${servicios}"></p>
                   <a href="/servicio/" class="btn btn-primary">Mantenimiento de Servicios</a>
                 </div>
               </div>
@@ -145,7 +145,7 @@
                 <h5 class="card-header">Cantidad de Historiales</h5>
                 <div class="card-body">
                   <h5 class="card-title">Historiales registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${historiales}"></p>
                   <a href="/historial/" class="btn btn-primary">Mantenimiento de Historiales</a>
                 </div>
               </div>
@@ -156,7 +156,7 @@
                 <h5 class="card-header">Cantidad de Reclamos</h5>
                 <div class="card-body">
                   <h5 class="card-title">Reclamos registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${reclamos}"></p>
                   <a href="/reclamo/" class="btn btn-primary">Listado de Reclamos</a>
                 </div>
               </div>
@@ -167,7 +167,7 @@
                 <h5 class="card-header">Cantidad de Pedidos</h5>
                 <div class="card-body">
                   <h5 class="card-title">Pedidos registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
+                  <p class="card-text" th:text="${pedidos}"></p>
                   <a href="/pedido/" class="btn btn-primary">Atender Pedidos</a>
                 </div>
               </div>

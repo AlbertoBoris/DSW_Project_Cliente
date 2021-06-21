@@ -56,7 +56,7 @@ public class PedidoServicioController {
 			model.addAttribute("estados", listaEsta);
 			model.addAttribute("horarios", listaHorari);
 			model.addAttribute("horas", listaHora);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
