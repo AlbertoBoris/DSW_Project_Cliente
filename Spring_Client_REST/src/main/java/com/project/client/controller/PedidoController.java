@@ -150,5 +150,24 @@ public class PedidoController {
 		return "redirect:/pedido/";
 
 	}
+	
+	@RequestMapping("/consultaPedido")
+	public String index() {
+		return "consultaPedido";
+	}
+	
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Pedido[] listado(@RequestParam("usuario") String usuario) {
+		Pedido[] data = null;
+		try {
+			RestTemplate rt=new RestTemplate();
+			ResponseEntity<Pedido[]>response=rt.getForEntity(REST_PEDIDO+"consulta/"+usuario, Pedido[].class);
+			data=response.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 
 }

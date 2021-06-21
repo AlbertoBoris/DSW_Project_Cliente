@@ -111,4 +111,24 @@ public class HistorialController {
 
 	}
 
+	@RequestMapping("/consultaHistorial")
+	public String index() {
+		return "consultaHistorial";
+	}
+
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Historial[] listado(@RequestParam("mascota") String mascota) {
+		Historial[] data = null;
+		try {
+			RestTemplate rt = new RestTemplate();
+			ResponseEntity<Historial[]> response = rt.getForEntity(REST_HISTORIAL + "consulta/" + mascota,
+					Historial[].class);
+			data = response.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
 }

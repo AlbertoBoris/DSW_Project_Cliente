@@ -1,8 +1,5 @@
 package com.project.client.controller;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.gson.Gson;
 import com.project.client.entity.Reclamo;
 import com.project.client.entity.Servicio;
 
@@ -56,6 +52,25 @@ public class ReclamoController {
 		}
 		return "redirect:/reclamo/";
 
+	}
+	
+	@RequestMapping("/consultaReclamo")
+	public String index() {
+		return "consultaReclamo";
+	}
+	
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Reclamo[] listado(@RequestParam("nombre") String nombre) {
+		Reclamo[] data = null;
+		try {
+			RestTemplate rt=new RestTemplate();
+			ResponseEntity<Reclamo[]>response=rt.getForEntity(REST_RECLAMO+"consulta/"+nombre, Reclamo[].class);
+			data=response.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
 	}
 
 }

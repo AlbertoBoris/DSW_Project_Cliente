@@ -110,5 +110,24 @@ public class ServicioController {
 		return "redirect:/servicio/";
 
 	}
+	
+	@RequestMapping("/consultaServicio")
+	public String index() {
+		return "consultaServicio";
+	}
+	
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Servicio[] listado(@RequestParam("nombre") String nombre) {
+		Servicio[] data = null;
+		try {
+			RestTemplate rt=new RestTemplate();
+			ResponseEntity<Servicio[]>response=rt.getForEntity(REST_SERVICIO+"consulta/"+nombre, Servicio[].class);
+			data=response.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 
 }

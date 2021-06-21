@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-<title>Consulta</title>
-<!-- Bootstrap CSS -->
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -13,8 +11,9 @@
 	<link rel="stylesheet" th:href="@{/resources/datepicker/bootstrap-datepicker.css}">
 	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
 	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
-<style>
-	.modal-header, h4, .close {
+    <title>Mascotas</title>
+    <style>
+        .modal-header, h4, .close {
 		background-color: #286090;
 		color: white !important;
 		text-align: center;
@@ -86,7 +85,7 @@
 	.form-control {
 	  padding-left: 40px!important;
 	}
-	.in{
+      .in{
         cursor: pointer;
       }
 
@@ -104,13 +103,12 @@
           margin: auto;
           box-shadow: 5px 5px rgb(219, 219, 219);
       }
-	/*.toast-succes{
-		width: 120px;
-	}*/
-</style> 	
+    </style>
 </head>
 <body>
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(48, 78, 105) !important">
+    <div class="" style="width: 100%; margin: 0px auto;">
+        <!--NavBar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(48, 78, 105) !important">
             <a class="navbar-brand" href="#">
                 <img src="img/libroLogo.png" alt="" width="100px">
             </a>
@@ -182,16 +180,20 @@
               </ul>
             </div>
           </nav>
+         </div>
+          <br> <br>
+        <!--/NavBar-->
+        <!--Section-->
 	<div class="container">
 	
-		<h2 class="text-center mt-4">Consulta de Mascotas por Usuario</h2>
+		<h2 class="text-center">Consulta de Historial por Mascota</h2>
 		<form>
 		   <div class="form-row mt-4">
 			    <div class="col-auto">
-			       <label for="exampleInputPassword1">Ingresar Usuario</label>
+			       <label for="exampleInputPassword1">Ingresar Mascota</label>
 			    </div>
 			   <div class="col-auto">
-			      	 <input type="text" class="form-control" id="idUsuario">
+			      	 <input type="text" class="form-control" id="idMascota">
 			    </div>
 			    <div class="col-auto">
 			      <button type="button" class="btn btn-primary mb-2" id="btn-consultar">Consultar</button>
@@ -200,15 +202,14 @@
 		</form>
 		
 		<div class="mt-4">
-				<table class="table table-striped table-bordered mt-1" id="tableMascotas">
+				<table class="table table-striped table-bordered mt-5" id="tableHistorial">
 							  <thead>
 							   <tr>
 					                <th>Codigo</th>
-					                <th>Nombre</th>
-					                <th>Animal</th>
-					                <th>Raza</th>
-					                <th>Nacimiento</th>
-					                <th>Dueño</th>
+					                 <th>Mascota</th>
+					                <th>Asunto</th>
+					                <th>Motivo</th>
+					                <th>Tratamiento</th>
 					            </tr>
 							  </thead>
 							  <tbody>
@@ -220,8 +221,10 @@
 		
 		
 	</div>
-	<br><br><br>
-	<!--Footer-->
+	
+	<br> <br>
+        <!--Section-->
+        <!--Footer-->
         <footer style="height: 50px; background-color: rgb(48, 78, 105);">
           <div class="row">
               <div class="col text-center text-white">
@@ -230,7 +233,6 @@
           </div>
       </footer>
       <!--/Footer-->
-      
 	<!-- liberia completa de JQUERY -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
@@ -242,13 +244,12 @@
 	
 	<script>
 	$(document).on("click","#btn-consultar",function(){
-		$("#tableMascotas tbody").empty();
-		$.get("listado?usuario="+$("#idUsuario").val(),function(response){
+		$("#tableHistorial tbody").empty();
+		$.get("listado?mascota="+$("#idMascota").val(),function(response){
 			$.each(response,function(index,item){
-				$("#tableMascotas").append("<tr><td>"+item.codigo+"</td><td>"+item.nombre+"</td><td>"+
-															item.animal+"</td><td>"+item.raza+"</td><td>"+
-															item.fec_Nac+"</td><td>"+
-															item.usuario.nombres+"</td></tr>");			
+				$("#tableHistorial").append("<tr><td>"+item.codigo+"</td><td>"+item.mascota.nombre+"</td><td>"+
+															item.asunto+"</td><td>"+item.motivo+"</td><td>"+
+															item.tratamiento+"</td></tr>");			
 			
 			})
 		});
