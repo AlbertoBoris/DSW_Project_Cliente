@@ -1,13 +1,91 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <title>Intranet</title>
-    <style>
-      .in{
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link rel="stylesheet" th:href="@{/resources/datepicker/bootstrap-datepicker.css}">
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
+    <title>Consulta</title>
+<style>
+	.modal-header, h4, .close {
+		background-color: #286090;
+		color: white !important;
+		text-align: center;
+		font-size: 20px;
+	}
+	.help-block{
+	 color: red;
+	 /*display: none;*/
+	}
+	.form-group.has-error .form-control-label {
+	  color: red;
+	}
+	.form-group.has-error .form-control {
+	  border: 1px solid red;
+	  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+	}
+	
+	.alertify .ajs-dialog {
+	    top: 50%;
+	    transform: translateY(-50%);
+	    margin: auto;
+	}
+	
+	.ajs-header{
+		background-color: #286090 !important;
+		color: white !important;
+		/*text-align: center;*/
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.ajs-ok{
+		color: #fff;
+	    background-color: #007bff;
+	    border-color: #007bff;
+	}
+	.ajs-cancel{
+		color: #fff;
+	    background-color: #dc3545;
+	    border-color: #dc3545;
+	}
+	.btn-primary{
+	background-color: #286090 !important;
+	}
+	.dataTables_length, .dataTables_info{
+		display: none;
+	}
+	.modal-lg, .modal-xl {
+		max-width: 900px;
+		max-height: 800px;
+	}
+	
+	.form-control-feedback2 {
+	  margin:1px;
+	  position: absolute;
+	  padding: 10px;
+	  pointer-events: none;
+	  background-color: #e9ecef;
+	  border-style: none;
+	}
+	.form-control-feedback3 {
+	  margin:1px;
+	  position: absolute;
+	  margin-left:225px;
+	  padding: 10px;
+	  pointer-events: none;
+	  background-color: #e9ecef;
+	  border-style: none;
+	}
+	.form-control {
+	  padding-left: 40px!important;
+	}
+	.in{
         cursor: pointer;
       }
 
@@ -21,12 +99,17 @@
             color: rgb(0, 155, 95) !important;
             transition: 0.3s;
       }
-    </style>
+      .perfil{
+          margin: auto;
+          box-shadow: 5px 5px rgb(219, 219, 219);
+      }
+	/*.toast-succes{
+		width: 120px;
+	}*/
+</style> 	
 </head>
 <body>
-    <div class="" style="width: 100%; margin: 0px auto;">
-        <!--NavBar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(48, 78, 105) !important">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgb(48, 78, 105) !important">
             <a class="navbar-brand" href="#">
                 <img src="img/libroLogo.png" alt="" width="100px">
             </a>
@@ -44,7 +127,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <a class="dropdown-item" href="/usuario/">Mantenimiento</a>
-                      <a class="dropdown-item" href="/usuario/consultaUsuario	">Consulta</a>
+                      <a class="dropdown-item" href="/usuario/consultaUsuario/">Consulta</a>
                     </div>
                   </li>
                 <li class="nav-item dropdown">
@@ -53,7 +136,7 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="/mascota/">Mantenimiento</a>
-                    <a class="dropdown-item" href="/mascota/consultaMascota">Consulta</a>
+                    <a class="dropdown-item" href="#">Consulta</a>
                   </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -98,85 +181,49 @@
               </ul>
             </div>
           </nav>
-        <!--/NavBar-->
-        <h3 class="text-center mt-4">Intranet MediPets</h3>       
-					 
-		<a style="margin-left:55px;" href="/intranet/perfil/" type="button" class="btn btn-primary mt-3">Ver mi Perfil</a>
+	<div class="container">
+	
+		<h2 class="text-center mt-4">Consulta de Usuarios por DNI</h2>
+		<form>
+		   <div class="form-row mt-4">
+			    <div class="col-auto">
+			       <label for="exampleInputPassword1">Ingresar DNI</label>
+			    </div>
+			    <div class="col-auto">
+			      	 <input type="text" class="form-control" id="idDni">
+			    </div>
+			    <div class="col-auto">
+			      <button type="button" class="btn btn-primary mb-2" id="btn-consultar">Consultar</button>
+			    </div>
+		  </div>
+		</form>
 		
-        <!--Section datos-->
-        <div class="container-block p-5">
-          <div class="row">
-          
-            <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Usuarios</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Usuarios registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/usuario/" class="btn btn-primary">Mantenimiento de Usuarios</a>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Mascotas</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Mascotas registradas</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/mascota/" class="btn btn-primary">Mantenimiento de Mascotas</a>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Servicios</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Servicios registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/servicio/" class="btn btn-primary">Mantenimiento de Servicios</a>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Historiales</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Historiales registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/historial/" class="btn btn-primary">Mantenimiento de Historiales</a>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Reclamos</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Reclamos registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/reclamo/" class="btn btn-primary">Listado de Reclamos</a>
-                </div>
-              </div>
-            </div>
-            
-           <div class="col-4 mb-3">
-              <div class="card">
-                <h5 class="card-header">Cantidad de Pedidos</h5>
-                <div class="card-body">
-                  <h5 class="card-title">Pedidos registrados</h5>
-                  <p class="card-text">La cantidad total es:-----</p>
-                  <a href="/pedido/" class="btn btn-primary">Atender Pedidos</a>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        <!--/Section datos-->
-        <!--Footer-->
+		<div class="mt-4">
+				<table class="table table-striped table-bordered mt-1" id="tableUsuarios">
+							  <thead>
+							   <tr>
+					                <th>Codigo</th>
+					                <th>Nombre</th>
+					                <th>Apellido</th>
+					                <th>DNI</th>
+					                <th>Direccion</th>
+					                <th>Apodo</th>
+					                <th>Correo</th>
+					                <th>Telefono</th>
+					                <th>Distrito</th>
+					            </tr>
+							  </thead>
+							  <tbody>
+							  </tbody>
+				</table>	
+		</div>
+		
+
+		
+		
+	</div>
+	<br><br><br>
+	<!--Footer-->
         <footer style="height: 50px; background-color: rgb(48, 78, 105);">
           <div class="row">
               <div class="col text-center text-white">
@@ -185,9 +232,41 @@
           </div>
       </footer>
       <!--/Footer-->
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<!-- liberia completa de JQUERY -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+	
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	
+	<script>
+	$(document).on("click","#btn-consultar",function(){
+		$("#tableUsuarios tbody").empty();
+		$.get("listado?dni="+$("#idDni").val(),function(response){
+			$.each(response,function(index,item){
+				$("#tableUsuarios").append("<tr><td>"+item.codigo+"</td><td>"+item.nombres+"</td><td>"+
+															item.apellidos+"</td><td>"+item.dni+"</td><td>"+
+															item.direccion+"</td><td>"+item.apodo+"</td><td>"+
+															item.correo+"</td><td>"+item.telefono+"</td><td>"+
+															item.distrito.nombre+"</td></tr>");			
+			
+			})
+		});
+	})
+	
+	
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

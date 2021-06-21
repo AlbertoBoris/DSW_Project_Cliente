@@ -113,4 +113,25 @@ public class MascotaController {
 		
 	}
 	
+	@RequestMapping("/consultaMascota")
+	public String index() {
+		
+		return "consultaMascota";
+	}
+	
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Mascota[] listado(@RequestParam("usuario") int usuario) {
+		Mascota[] data=null;
+		try {
+			RestTemplate rt=new RestTemplate();
+			ResponseEntity<Mascota[]>response=rt.getForEntity(REST_MASCOTA+"consulta2/"+usuario, Mascota[].class);
+			data=response.getBody();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
 }

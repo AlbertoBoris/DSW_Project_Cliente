@@ -123,4 +123,25 @@ public class UsuarioController {
 		
 	}
 	
+	@RequestMapping("/consultaUsuario")
+	public String index() {
+		
+		return "consultaUsuario";
+	}
+	
+	@RequestMapping("/listado")
+	@ResponseBody
+	public Usuario[] listado(@RequestParam("dni") String dni) {
+		Usuario[] data=null;
+		try {
+			RestTemplate rt=new RestTemplate();
+			ResponseEntity<Usuario[]>response=rt.getForEntity(REST_USUARIO+"consulta1/"+dni, Usuario[].class);
+			data=response.getBody();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
 }
